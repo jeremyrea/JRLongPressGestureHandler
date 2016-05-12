@@ -1,0 +1,8 @@
+.DS_STORE
+.build/
+build/
+DerivedData
+xuserdata
+Carthage/Build
+*.hmap
+*.ipa
