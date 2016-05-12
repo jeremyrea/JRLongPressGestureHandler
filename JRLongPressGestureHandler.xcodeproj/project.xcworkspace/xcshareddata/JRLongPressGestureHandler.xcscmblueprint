@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "37900168F0E7CF2816A39DAAB7C152501B218007",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "37900168F0E7CF2816A39DAAB7C152501B218007" : 0,
+    "8B4103FE28356989EB933415A1C577A6D69AC689" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "CB09839D-390C-49A2-AD48-470E736E5B0D",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "37900168F0E7CF2816A39DAAB7C152501B218007" : "JRLongPressGestureHandler\/",
+    "8B4103FE28356989EB933415A1C577A6D69AC689" : "Semper\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "JRLongPressGestureHandler",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "JRLongPressGestureHandler.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/jeremyrea\/JRLongPressGestureHandler.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "37900168F0E7CF2816A39DAAB7C152501B218007"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "bitbucket.org:jrmrea\/semper.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "8B4103FE28356989EB933415A1C577A6D69AC689"
+    }
+  ]
+}

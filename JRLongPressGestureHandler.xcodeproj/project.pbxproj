@@ -8,12 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		3F917DA51CE3FFA4009D8EFE /* JRLongPressGestureHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = 3F917DA41CE3FFA4009D8EFE /* JRLongPressGestureHandler.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3F917DBC1CE412F9009D8EFE /* JRLongPressGestureHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F917DBB1CE412F9009D8EFE /* JRLongPressGestureHandler.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		3F917DA11CE3FFA4009D8EFE /* JRLongPressGestureHandler.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = JRLongPressGestureHandler.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F917DA41CE3FFA4009D8EFE /* JRLongPressGestureHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JRLongPressGestureHandler.h; sourceTree = "<group>"; };
 		3F917DA61CE3FFA4009D8EFE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3F917DBB1CE412F9009D8EFE /* JRLongPressGestureHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = JRLongPressGestureHandler.swift; path = Source/JRLongPressGestureHandler.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,10 +48,19 @@
 		3F917DA31CE3FFA4009D8EFE /* JRLongPressGestureHandler */ = {
 			isa = PBXGroup;
 			children = (
+				3F917DBA1CE412E3009D8EFE /* Source */,
 				3F917DA41CE3FFA4009D8EFE /* JRLongPressGestureHandler.h */,
 				3F917DA61CE3FFA4009D8EFE /* Info.plist */,
 			);
 			path = JRLongPressGestureHandler;
+			sourceTree = "<group>";
+		};
+		3F917DBA1CE412E3009D8EFE /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				3F917DBB1CE412F9009D8EFE /* JRLongPressGestureHandler.swift */,
+			);
+			name = Source;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -130,6 +141,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3F917DBC1CE412F9009D8EFE /* JRLongPressGestureHandler.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -230,6 +242,7 @@
 		3F917DAA1CE3FFA4009D8EFE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -240,12 +253,14 @@
 				PRODUCT_BUNDLE_IDENTIFIER = ca.jeremyrea.JRLongPressGestureHandler;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 		3F917DAB1CE3FFA4009D8EFE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
