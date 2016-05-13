@@ -37,7 +37,7 @@ Create your touch recognizer at the top of the class:
 
     override func viewDidLoad() {
       // ...
-      self.longPress.addTarget(self, action: #selector(longPressGestureRecognized(\_:)))
+      self.longPress.addTarget(self, action: #selector(longPressGestureRecognized(_:)))
       self.tableView.addGestureRecognizer(longPress)
     }
 
