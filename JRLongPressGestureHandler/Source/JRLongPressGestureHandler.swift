@@ -1,7 +1,6 @@
 import UIKit
 
 public protocol JRLongPressGestureHandlerDelegate: class {
-  func didMoveCell(startIndexPath: NSIndexPath, endIndexPath: NSIndexPath)
   func didEndLongPress(startIndexPath: NSIndexPath, endIndexPath: NSIndexPath)
 }
 
