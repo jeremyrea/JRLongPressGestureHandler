@@ -1,8 +1,7 @@
 import UIKit
 
 public protocol JRLongPressGestureHandlerDelegate: class {
-  func updateDataSource(sourceRow: Int, destinationRow: Int)
-  func savePosition(startRow: Int, endRow: Int)
+  func didEndLongPress(startIndex: Int, endIndex: Int)
 }
 
 public class JRLongPressGestureHandler {
@@ -17,7 +16,7 @@ public class JRLongPressGestureHandler {
   private var sourceIndexPath: NSIndexPath?
   private var previousIndexPath: NSIndexPath?
   private var backupIndexPath: NSIndexPath?
-  private var permuteIndex: Int!
+  private var startIndex: Int!
   
   public init(delegate: JRLongPressGestureHandlerDelegate) {
     self.delegate = delegate
@@ -37,7 +36,7 @@ public class JRLongPressGestureHandler {
     switch (gestureState) {
     case UIGestureRecognizerState.Began:
       sourceIndexPath = indexPath
-      permuteIndex = sourceIndexPath!.row
+      startIndex = sourceIndexPath!.row
       pickupCellAnimation(tableView, indexPath: indexPath!, location: location)
       
     case UIGestureRecognizerState.Changed:
@@ -46,15 +45,14 @@ public class JRLongPressGestureHandler {
       snapshot?.center = center
       
       if cellMoved(sourceIndexPath!, indexPath: indexPath!) {
-        delegate!.updateDataSource(sourceIndexPath!.row, destinationRow: indexPath!.row)
         displaceCellAnimation(tableView, indexPath: indexPath!)
       }
       
       self.previousIndexPath = indexPath
       
     default:
-      delegate!.savePosition(permuteIndex, endRow: indexPath!.row)
       depositCellAnimation(tableView, indexPath: indexPath!)
+      delegate!.didEndLongPress(startIndex, endIndex: indexPath!.row)
 
       break
     }
