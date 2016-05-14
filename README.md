@@ -43,15 +43,15 @@ Create your touch recognizer at the top of the class:
       self.tableView.addGestureRecognizer(longPress)
     }
 
-You'll now need to specify the handler's protocol in your UITableViewController's declaration:
-
-    class TableViewController: UITableViewController, JRLongPressGestureHandlerDelegate
-
-To conform to the protocol, you'll finally need to implement the following functions:
-
     func longPressGestureRecognized(gesture: UILongPressGestureRecognizer) {
       gestureHandler.longPressGestureRecognized(self.tableView, gesture: gesture)
     }
+
+You'll now want to specify the handler's protocol in your UITableViewController's declaration:
+
+    class TableViewController: UITableViewController, JRLongPressGestureHandlerDelegate
+
+To conform to the protocol, you'll need to implement the following function:
 
     func didEndLongPress(startIndexPath: NSIndexPath, endIndexPath: NSIndexPath) { {
       // You will want to update your datasource to swap
