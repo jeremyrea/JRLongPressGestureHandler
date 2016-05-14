@@ -47,14 +47,13 @@ public class JRLongPressGestureHandler {
       
       if cellMoved(sourceIndexPath!, indexPath: indexPath!) {
         displaceCellAnimation(tableView, indexPath: indexPath!)
-        delegate!.didMoveCell(sourceIndexPath!, endIndexPath: indexPath!)
       }
       
       self.previousIndexPath = indexPath
       
     default:
-      depositCellAnimation(tableView, indexPath: indexPath!)
       delegate!.didEndLongPress(startIndexPath, endIndexPath: indexPath!)
+      depositCellAnimation(tableView, indexPath: indexPath!)
 
       break
     }
