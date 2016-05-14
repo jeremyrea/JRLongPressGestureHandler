@@ -53,19 +53,7 @@ To conform to the protocol, you'll finally need to implement the following funct
       gestureHandler.longPressGestureRecognized(self.tableView, gesture: gesture)
     }
 
-    func updateDataSource(sourceRow: Int, destinationRow: Int) {
-      // This method is called while the long press hasn't
-      // yet been released
-
-      // Swap here the items at the returned indexes in your
-      // tableView's datasource so that your cells don't get
-      // mixed up
-    }
-
-    func savePosition(startRow: Int, endRow: Int) {
-      // This method is called once the long press has been
-      // released and the cell is set back down
-
-      // You may want to save changes done to the data
-      // source to your persistent store
+    func didEndLongPress(startIndexPath: NSIndexPath, endIndexPath: NSIndexPath) { {
+      // You will want to update your datasource to swap
+      // the items located at these positions
     }
