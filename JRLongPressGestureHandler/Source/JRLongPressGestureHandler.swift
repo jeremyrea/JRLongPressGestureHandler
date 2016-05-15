@@ -18,8 +18,20 @@ public class JRLongPressGestureHandler {
   private var backupIndexPath: NSIndexPath?
   private var startIndexPath: NSIndexPath!
   
+  public var transformOnCellSelection: CGAffineTransform!
+  public var transformOnCellDeposit: CGAffineTransform!
+  public var durationForSelectionAnimation: NSTimeInterval!
+  public var durationForDepositAnimation: NSTimeInterval!
+  public var alphaForCell: CGFloat!
+  
   public init(delegate: JRLongPressGestureHandlerDelegate) {
     self.delegate = delegate
+    
+    transformOnCellSelection = CGAffineTransformMakeScale(1.05, 1.05)
+    transformOnCellDeposit = CGAffineTransformIdentity
+    durationForSelectionAnimation = 0.25
+    durationForDepositAnimation = 0.25
+    alphaForCell = 0.98
   }
   
   public func longPressGestureRecognized(tableView: UITableView, gesture: UILongPressGestureRecognizer) {
@@ -81,10 +93,10 @@ public class JRLongPressGestureHandler {
     snapshot = customSnapshotFromView(cell, snapshotCenter: centerPoint)
     tableView.addSubview(snapshot!)
     
-    UIView.animateWithDuration(0.25, animations: { () -> Void in
+    UIView.animateWithDuration(durationForSelectionAnimation, animations: { () -> Void in
       centerPoint.y = location.y
       cell.alpha = CellAlpha.Hidden.rawValue
-      self.configureLocalSnapshot(centerPoint, transform: CGAffineTransformMakeScale(1.05, 1.05), alpha: 0.98)
+      self.configureLocalSnapshot(centerPoint, transform: self.transformOnCellSelection, alpha: self.alphaForCell)
     })
   }
   
@@ -97,8 +109,8 @@ public class JRLongPressGestureHandler {
   private func depositCellAnimation(tableView: UITableView, indexPath: NSIndexPath) {
     let cell = tableView.cellForRowAtIndexPath(indexPath)!
     cell.alpha = CellAlpha.Hidden.rawValue
-    UIView.animateWithDuration(0.25, animations: { () -> Void in
-      self.configureLocalSnapshot(cell.center, transform: CGAffineTransformIdentity, alpha: 0.0)
+    UIView.animateWithDuration(durationForDepositAnimation, animations: { () -> Void in
+      self.configureLocalSnapshot(cell.center, transform: self.transformOnCellDeposit, alpha: 0.0)
       cell.alpha = CellAlpha.Visible.rawValue
       
       }, completion: { (finished) in
