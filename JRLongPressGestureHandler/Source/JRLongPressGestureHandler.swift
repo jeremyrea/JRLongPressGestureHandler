@@ -1,84 +1,62 @@
 import UIKit
 
 public protocol JRLongPressGestureHandlerDelegate: class {
-  func didEndLongPress(startIndexPath: NSIndexPath, endIndexPath: NSIndexPath)
+  func didEndLongPress(_ startIndexPath: IndexPath, endIndexPath: IndexPath)
 }
 
-public class JRLongPressGestureHandler {
+open class JRLongPressGestureHandler {
   
   enum CellAlpha: CGFloat {
-    case Hidden = 0.0
-    case Visible = 1.0
+    case hidden = 0.0
+    case visible = 1.0
   }
   
-  private weak var delegate: JRLongPressGestureHandlerDelegate?
-  private var snapshot: UIView?
-  private var sourceIndexPath: NSIndexPath?
-  private var previousIndexPath: NSIndexPath?
-  private var backupIndexPath: NSIndexPath?
-  private var startIndexPath: NSIndexPath!
+  fileprivate weak var delegate: JRLongPressGestureHandlerDelegate?
+  fileprivate var snapshot: UIView?
+  fileprivate var sourceIndexPath: IndexPath?
+  fileprivate var previousIndexPath: IndexPath?
+  fileprivate var backupIndexPath: IndexPath?
+  fileprivate var startIndexPath: IndexPath!
   
-  public var transformOnCellSelection: CGAffineTransform!
-  public var transformOnCellDeposit: CGAffineTransform!
-  public var durationForSelectionAnimation: NSTimeInterval!
-  public var durationForDepositAnimation: NSTimeInterval!
-  public var alphaForCell: CGFloat!
+  open var transformOnCellSelection: CGAffineTransform!
+  open var transformOnCellDeposit: CGAffineTransform!
+  open var durationForSelectionAnimation: TimeInterval!
+  open var durationForDepositAnimation: TimeInterval!
+  open var alphaForCell: CGFloat!
   
   public init(delegate: JRLongPressGestureHandlerDelegate) {
     self.delegate = delegate
     
-    transformOnCellSelection = CGAffineTransformMakeScale(1.05, 1.05)
-    transformOnCellDeposit = CGAffineTransformIdentity
+    transformOnCellSelection = CGAffineTransform(scaleX: 1.05, y: 1.05)
+    transformOnCellDeposit = CGAffineTransform.identity
     durationForSelectionAnimation = 0.25
     durationForDepositAnimation = 0.25
     alphaForCell = 0.98
   }
   
-  public func longPressGestureRecognized(tableView: UITableView, gesture: UILongPressGestureRecognizer) {
+  open func longPressGestureRecognized(_ tableView: UITableView, gesture: UILongPressGestureRecognizer) {
     let gestureState: UIGestureRecognizerState = gesture.state
-    let location: CGPoint = gesture.locationInView(tableView)
-    var indexPath: NSIndexPath? = tableView.indexPathForRowAtPoint(location)
+    let location: CGPoint = gesture.location(in: tableView)
+    var indexPath: IndexPath? = tableView.indexPathForRow(at: location)
     
     if cellIsOutOfBounds(indexPath) {
       indexPath = self.backupIndexPath
-    } else if cellWasOutOfBounds(tableView.numberOfRowsInSection(0), indexPath: indexPath!) {
+    } else if cellWasOutOfBounds(tableView.numberOfRows(inSection: 0), indexPath: indexPath!) {
       self.backupIndexPath = indexPath
     }
     
     switch (gestureState) {
-    case UIGestureRecognizerState.Began:
+    case UIGestureRecognizerState.began:
       sourceIndexPath = indexPath
       startIndexPath = sourceIndexPath
       pickupCellAnimation(tableView, indexPath: indexPath!, location: location)
       
-    case UIGestureRecognizerState.Changed:
+    case UIGestureRecognizerState.changed:
       var center: CGPoint = snapshot!.center
       center.y = location.y
       snapshot?.center = center
       
       if cellMoved(sourceIndexPath!, indexPath: indexPath!) {
-        
-        print("cell center: ", center.y)
-        print(tableView.frame.height + tableView.contentOffset.y - 88)
-        print("--------")
-        
-        
-        // Scrolling
-        if(center.y > tableView.frame.height + tableView.contentOffset.y - 65 && indexPath!.row + 1 < tableView.numberOfRowsInSection((indexPath?.section)!)) {
-          indexPath = NSIndexPath(forRow: indexPath!.row + 1, inSection: indexPath!.section)
-          
-          UIView.animateWithDuration(0.5, animations: { () -> Void in
-            tableView.scrollToRowAtIndexPath(indexPath!, atScrollPosition: .Bottom, animated: false)
-          })
-        } else if (center.y - tableView.contentOffset.y < 64 + 65 && indexPath!.row - 1 >= 0) {
-          // 64 is height of navigation bar + status bar
-//          indexPath = NSIndexPath(forRow: indexPath!.row - 1, inSection: indexPath!.section)
-          
-          UIView.animateWithDuration(0.5, animations: { () -> Void in
-            tableView.scrollToRowAtIndexPath(indexPath!, atScrollPosition: .Top, animated: false)
-          })
-        }
-        
         displaceCellAnimation(tableView, indexPath: indexPath!)
       }
       
@@ -92,48 +70,48 @@ public class JRLongPressGestureHandler {
     }
   }
   
-  private func cellIsOutOfBounds(indexPath: NSIndexPath?) -> Bool {
+  fileprivate func cellIsOutOfBounds(_ indexPath: IndexPath?) -> Bool {
     return indexPath == nil && backupIndexPath != nil
   }
   
-  private func cellWasOutOfBounds(tableSize: Int, indexPath: NSIndexPath) -> Bool {
-    return (indexPath.row == 0 || indexPath.row == tableSize - 1)
+  fileprivate func cellWasOutOfBounds(_ tableSize: Int, indexPath: IndexPath) -> Bool {
+    return ((indexPath as NSIndexPath).row == 0 || (indexPath as NSIndexPath).row == tableSize - 1)
   }
   
-  private func cellMoved(sourceIndexPath: NSIndexPath, indexPath: NSIndexPath) -> Bool {
+  fileprivate func cellMoved(_ sourceIndexPath: IndexPath, indexPath: IndexPath) -> Bool {
     return indexPath != sourceIndexPath
   }
   
-  private func hideCell(tableView: UITableView, indexPath: NSIndexPath) {
-    let cell = tableView.cellForRowAtIndexPath(indexPath)!
-    cell.alpha = CellAlpha.Hidden.rawValue
+  fileprivate func hideCell(_ tableView: UITableView, indexPath: IndexPath) {
+    let cell = tableView.cellForRow(at: indexPath)!
+    cell.alpha = CellAlpha.hidden.rawValue
   }
   
-  private func pickupCellAnimation(tableView: UITableView, indexPath: NSIndexPath, location: CGPoint) {
-    let cell = tableView.cellForRowAtIndexPath(indexPath)!
+  fileprivate func pickupCellAnimation(_ tableView: UITableView, indexPath: IndexPath, location: CGPoint) {
+    let cell = tableView.cellForRow(at: indexPath)!
     var centerPoint = cell.center
     snapshot = customSnapshotFromView(cell, snapshotCenter: centerPoint)
     tableView.addSubview(snapshot!)
     
-    UIView.animateWithDuration(durationForSelectionAnimation, animations: { () -> Void in
+    UIView.animate(withDuration: durationForSelectionAnimation, animations: { () -> Void in
       centerPoint.y = location.y
-      cell.alpha = CellAlpha.Hidden.rawValue
+      cell.alpha = CellAlpha.hidden.rawValue
       self.configureLocalSnapshot(centerPoint, transform: self.transformOnCellSelection, alpha: self.alphaForCell)
     })
   }
   
-  private func displaceCellAnimation(tableView: UITableView, indexPath: NSIndexPath) {
-    tableView.moveRowAtIndexPath(sourceIndexPath!, toIndexPath: indexPath)
+  fileprivate func displaceCellAnimation(_ tableView: UITableView, indexPath: IndexPath) {
+    tableView.moveRow(at: sourceIndexPath!, to: indexPath)
     sourceIndexPath = indexPath
     hideCell(tableView, indexPath: indexPath)
   }
   
-  private func depositCellAnimation(tableView: UITableView, indexPath: NSIndexPath) {
-    let cell = tableView.cellForRowAtIndexPath(indexPath)!
-    cell.alpha = CellAlpha.Hidden.rawValue
-    UIView.animateWithDuration(durationForDepositAnimation, animations: { () -> Void in
+  fileprivate func depositCellAnimation(_ tableView: UITableView, indexPath: IndexPath) {
+    let cell = tableView.cellForRow(at: indexPath)!
+    cell.alpha = CellAlpha.hidden.rawValue
+    UIView.animate(withDuration: durationForDepositAnimation, animations: { () -> Void in
       self.configureLocalSnapshot(cell.center, transform: self.transformOnCellDeposit, alpha: 0.0)
-      cell.alpha = CellAlpha.Visible.rawValue
+      cell.alpha = CellAlpha.visible.rawValue
       
       }, completion: { (finished) in
         self.sourceIndexPath = nil
@@ -142,26 +120,26 @@ public class JRLongPressGestureHandler {
     })
   }
   
-  private func customSnapshotFromView(inputView: UIView, snapshotCenter: CGPoint) -> UIView {
+  fileprivate func customSnapshotFromView(_ inputView: UIView, snapshotCenter: CGPoint) -> UIView {
     let image = takeCellSnapshot(inputView)
     
     let imageView = createViewFromImage(image)
-    imageView.alpha = CellAlpha.Hidden.rawValue
+    imageView.alpha = CellAlpha.hidden.rawValue
     imageView.center = snapshotCenter
     
     return imageView
   }
   
-  private func takeCellSnapshot(inputView: UIView) -> UIImage {
+  fileprivate func takeCellSnapshot(_ inputView: UIView) -> UIImage {
     UIGraphicsBeginImageContextWithOptions(inputView.bounds.size, false, 0)
-    inputView.layer.renderInContext(UIGraphicsGetCurrentContext()!)
+    inputView.layer.render(in: UIGraphicsGetCurrentContext()!)
     let image = UIGraphicsGetImageFromCurrentImageContext()
     UIGraphicsEndImageContext()
     
-    return image
+    return image!
   }
   
-  private func createViewFromImage(image: UIImage) -> UIImageView {
+  fileprivate func createViewFromImage(_ image: UIImage) -> UIImageView {
     let imageView =  UIImageView(image: image)
     imageView.layer.masksToBounds = false
     imageView.layer.cornerRadius = 0.0
@@ -172,7 +150,7 @@ public class JRLongPressGestureHandler {
     return imageView
   }
   
-  private func configureLocalSnapshot(center: CGPoint, transform: CGAffineTransform, alpha: CGFloat) {
+  fileprivate func configureLocalSnapshot(_ center: CGPoint, transform: CGAffineTransform, alpha: CGFloat) {
     self.snapshot?.center = center
     self.snapshot?.transform = transform
     self.snapshot?.alpha = alpha
