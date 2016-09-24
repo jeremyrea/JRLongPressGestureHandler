@@ -57,6 +57,28 @@ public class JRLongPressGestureHandler {
       snapshot?.center = center
       
       if cellMoved(sourceIndexPath!, indexPath: indexPath!) {
+        
+        print("cell center: ", center.y)
+        print(tableView.frame.height + tableView.contentOffset.y - 88)
+        print("--------")
+        
+        
+        // Scrolling
+        if(center.y > tableView.frame.height + tableView.contentOffset.y - 65 && indexPath!.row + 1 < tableView.numberOfRowsInSection((indexPath?.section)!)) {
+          indexPath = NSIndexPath(forRow: indexPath!.row + 1, inSection: indexPath!.section)
+          
+          UIView.animateWithDuration(0.5, animations: { () -> Void in
+            tableView.scrollToRowAtIndexPath(indexPath!, atScrollPosition: .Bottom, animated: false)
+          })
+        } else if (center.y - tableView.contentOffset.y < 64 + 65 && indexPath!.row - 1 >= 0) {
+          // 64 is height of navigation bar + status bar
+//          indexPath = NSIndexPath(forRow: indexPath!.row - 1, inSection: indexPath!.section)
+          
+          UIView.animateWithDuration(0.5, animations: { () -> Void in
+            tableView.scrollToRowAtIndexPath(indexPath!, atScrollPosition: .Top, animated: false)
+          })
+        }
+        
         displaceCellAnimation(tableView, indexPath: indexPath!)
       }
       
