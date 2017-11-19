@@ -2,6 +2,9 @@
 
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 
+## Notice
+This project is no longer maintained and was last compiled with Swift 3. I'd instead recommend using [iOS's native support for drag and drop](https://developer.apple.com/documentation/uikit/drag_and_drop/adopting_drag_and_drop_in_a_table_view) in tableviews, available as of iOS11.
+
 This framework was originally a translation of *UILongPressGestureRecognizer*, written in Objective-C, found at [https://github.com/moayes/UDo/](https://github.com/moayes/UDo/) (as appeared on [Ray Wenderlich](https://www.raywenderlich.com/63089/cookbook-moving-table-view-cells-with-a-long-press-gesture)) and I've since brought a few improvements so I bundled it to be easily reused in other iOS projects by others.
 
 ## Preview
